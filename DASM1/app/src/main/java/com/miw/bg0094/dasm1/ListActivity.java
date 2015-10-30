@@ -1,10 +1,14 @@
 package com.miw.bg0094.dasm1;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.miw.bg0094.dasm1.models.Show;
@@ -26,8 +30,8 @@ public class ListActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private MoviedbService service;
-    private LinearLayout shows_list;
     List<Show> actualShows;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +41,13 @@ public class ListActivity extends AppCompatActivity {
         // Displayed shows on device
         actualShows = new ArrayList<Show>();
 
-        // shows_list
-        shows_list = (LinearLayout) findViewById(R.id.shows_list);
+        //ListView
+        listView = (ListView) findViewById(R.id.listView);
 
         initRetrofit();
         refreshShowsList();
 
-        // shows_list
     }
-
 
 
     private void initRetrofit() {
@@ -54,9 +56,6 @@ public class ListActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(MoviedbService.class);
-
-
-
     }
 
     public void refreshShowsList() {
@@ -86,15 +85,27 @@ public class ListActivity extends AppCompatActivity {
 
     public void paintList() {
 
-        shows_list.removeAllViews();
+        ArrayAdapter<Show> adaptador = new ArrayAdapter<Show>(this, android.R.layout.simple_list_item_1, actualShows);
+              listView.setAdapter(adaptador);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String option = listView.getItemAtPosition(position).toString();
+
+                Log.d("..................", option.toString());
+                /*
+                Intent intent = new Intent(MainActivity.this, MuestraElementoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("OPTION", option);
+                bundle.putInt("POSITION", position);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                */
+            }
+        });
 
 
-        for (int i = 0; i < actualShows.size(); i++) {
-            TextView tv = new TextView(getApplicationContext());
-            tv.setText(actualShows.get(i).getName());
-            tv.setTextSize(25);
-            shows_list.addView(tv);
-        }
     }
 
     public void refreshList(View v) {

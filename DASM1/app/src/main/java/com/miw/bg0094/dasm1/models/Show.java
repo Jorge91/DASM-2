@@ -268,21 +268,6 @@ public class Show {
 
     @Override
     public String toString() {
-        return "Show{" +
-                "backdropPath=" + backdropPath +
-                ", firstAirDate='" + firstAirDate + '\'' +
-                ", genreIds=" + genreIds +
-                ", id=" + id +
-                ", originalLanguage='" + originalLanguage + '\'' +
-                ", originalName='" + originalName + '\'' +
-                ", overview='" + overview + '\'' +
-                ", originCountry=" + originCountry +
-                ", posterPath='" + posterPath + '\'' +
-                ", popularity=" + popularity +
-                ", name='" + name + '\'' +
-                ", voteAverage=" + voteAverage +
-                ", voteCount=" + voteCount +
-                ", additionalProperties=" + additionalProperties +
-                '}';
+        return name;
     }
 }
