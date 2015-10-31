@@ -27,12 +27,11 @@ public class DetailActivity extends AppCompatActivity {
     private Session session;
     private MoviedbService service;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        initService();
         getSession();
 
         ((TextView) findViewById(R.id.show_title)).setText(this.getIntent().getExtras().getString("name"));
@@ -45,29 +44,26 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.description)).setText(description);
         ((TextView) findViewById(R.id.year_text)).setText(this.getIntent().getExtras().getString("firstAirDate"));
 
-        Log.d("-----------", this.getIntent().getExtras().getString("posterPath"));
         String posterPath = this.getIntent().getExtras().getString("posterPath");
         if (!"".equals(posterPath)) Picasso.with(this).load("http://image.tmdb.org/t/p/w300" + posterPath).into((ImageView) findViewById(R.id.imageView));
-
-
-
     }
 
-    public void getSession() {
+    private void initService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.themoviedb.org/3")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(MoviedbService.class);
+    }
 
+
+    public void getSession() {
         Call<Session> result = service.getSession();
 
         result.enqueue(new Callback<Session>() {
             @Override
             public void onResponse(Response<Session> response, Retrofit retrofit) {
                 session = response.body();
-                Log.d("--------", session.toString());
-
             }
             @Override
             public void onFailure(Throwable t) {
@@ -79,27 +75,14 @@ public class DetailActivity extends AppCompatActivity {
 
     public void rateShow(View v) {
         float rating = ((RatingBar) findViewById(R.id.ratingBar)).getRating() * 2;
-        Log.d("------------", Float.toString(rating));
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.themoviedb.org/3")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        service = retrofit.create(MoviedbService.class);
-
         Call<RatingResponse> result = service.rateShow(show.getId(), session.getGuest_session_id(), rating);
 
         result.enqueue(new Callback<RatingResponse>() {
             @Override
             public void onResponse(Response<RatingResponse> response, Retrofit retrofit) {
-                RatingResponse ratingResponse = response.body();
-                Log.d("--------", ratingResponse.toString());
-
                 Toast.makeText(getApplicationContext(), "Successfully rated!",
                         Toast.LENGTH_LONG).show();
-
             }
-
             @Override
             public void onFailure(Throwable t) {
                 Log.d("------", t.getMessage());
@@ -107,8 +90,6 @@ public class DetailActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
-
-
 
     }
 }
