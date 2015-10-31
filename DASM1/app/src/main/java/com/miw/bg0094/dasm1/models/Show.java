@@ -5,23 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.transform.Result;
-
 public class Show {
     private Object backdropPath;
-    private String firstAirDate;
+    private String first_air_date;
     private List<Integer> genreIds = new ArrayList<Integer>();
     private Integer id;
     private String originalLanguage;
     private String originalName;
     private String overview;
     private List<String> originCountry = new ArrayList<String>();
-    private String posterPath;
+    private String poster_path;
     private Double popularity;
     private String name;
     private Integer voteAverage;
     private Integer voteCount;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    public Show(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     /**
      *
@@ -44,19 +47,19 @@ public class Show {
     /**
      *
      * @return
-     * The firstAirDate
+     * The first_air_date
      */
-    public String getFirstAirDate() {
-        return firstAirDate;
+    public String getFirst_air_date() {
+        return first_air_date;
     }
 
     /**
      *
-     * @param firstAirDate
+     * @param first_air_date
      * The first_air_date
      */
-    public void setFirstAirDate(String firstAirDate) {
-        this.firstAirDate = firstAirDate;
+    public void setFirst_air_date(String first_air_date) {
+        this.first_air_date = first_air_date;
     }
 
     /**
@@ -170,19 +173,19 @@ public class Show {
     /**
      *
      * @return
-     * The posterPath
+     * The poster_path
      */
-    public String getPosterPath() {
-        return posterPath;
+    public String getPoster_path() {
+        return poster_path;
     }
 
     /**
      *
-     * @param posterPath
+     * @param poster_path
      * The poster_path
      */
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
     /**

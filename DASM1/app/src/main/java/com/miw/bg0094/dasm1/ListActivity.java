@@ -7,14 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.miw.bg0094.dasm1.models.Session;
 import com.miw.bg0094.dasm1.models.Show;
 import com.miw.bg0094.dasm1.models.APIShowsList;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +25,6 @@ import retrofit.Retrofit;
 
 public class ListActivity extends AppCompatActivity {
 
-    private Retrofit retrofit;
     private MoviedbService service;
     List<Show> actualShows;
     private ListView listView;
@@ -91,25 +87,24 @@ public class ListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String option = listView.getItemAtPosition(position).toString();
-
-                Log.d("..................", option.toString());
-                /*
-                Intent intent = new Intent(MainActivity.this, MuestraElementoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("OPTION", option);
-                bundle.putInt("POSITION", position);
-                intent.putExtras(bundle);
+                Show option = (Show) listView.getItemAtPosition(position);
+                Intent intent = new Intent(ListActivity.this, DetailActivity.class);
+                intent.putExtra("name", option.getName());
+                intent.putExtra("id", option.getId());
+                intent.putExtra("description", option.getOverview());
+                intent.putExtra("firstAirDate", option.getFirst_air_date());
+                String poster_path = option.getPoster_path();
+                if (poster_path == null) poster_path = "";
+                intent.putExtra("posterPath", poster_path);
                 startActivity(intent);
-                */
             }
         });
-
-
     }
 
     public void refreshList(View v) {
         refreshShowsList();
     }
+
+
 
 }
