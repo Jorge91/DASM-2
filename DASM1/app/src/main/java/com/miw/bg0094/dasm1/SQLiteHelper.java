@@ -14,18 +14,11 @@ import java.util.List;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    // Database Version
     private static final int DATABASE_VERSION = 1;
-    // Database Name
     private static final String DATABASE_NAME = "ShowsDB";
-
-    // Books table name
     private static final String TABLE_SHOWS = "shows";
-
-    // Books Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-
     private static final String[] COLUMNS = {KEY_ID,KEY_NAME};
 
     public SQLiteHelper(Context context) {
@@ -34,7 +27,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // SQL statement to create book table
         String CREATE_SHOW_TABLE = "CREATE TABLE shows ( " +
                 "id INTEGER PRIMARY KEY, " +
                 "name TEXT )";
@@ -44,35 +36,24 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older books table if existed
         db.execSQL("DROP TABLE IF EXISTS shows");
-
-        // create fresh books table
         this.onCreate(db);
     }
 
     public void addShow(SimpleShow show){
-        //for logging
-        Log.d("addBook", show.toString());
-
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, show.get_name()); // get title
-        values.put(KEY_ID, show.get_id()); // get author
+        values.put(KEY_NAME, show.get_name());
+        values.put(KEY_ID, show.get_id());
 
-        // 3. insert
         try {
-            db.insert(TABLE_SHOWS, // table
-                    null, //nullColumnHack
-                    values); // key/value -> keys = column names/ values = column values
+            db.insert(TABLE_SHOWS,
+                    null,
+                    values);
         } catch (Exception e) {
             Log.d("Existing id: ", show.get_name());
         }
-
-        // 4. close
         db.close();
     }
 
@@ -94,9 +75,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 shows.add(show);
             } while (cursor.moveToNext());
         }
-
-        Log.d("-o-o-o-o-o-o-o-o-o-o", shows.toString());
-
         return shows;
     }
 

@@ -42,8 +42,6 @@ public class ListActivity extends AppCompatActivity {
         //ListView
         listView = (ListView) findViewById(R.id.listView);
 
-        // App bar
-
         initRetrofit();
         refreshShowsList();
 
@@ -117,7 +115,6 @@ public class ListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        // Inflador del menú: añade elementos a la action bar
         getMenuInflater().inflate(R.menu.menu, menu);
         this.menu = menu;
         return true;
@@ -130,7 +127,6 @@ public class ListActivity extends AppCompatActivity {
                 startActivity(new Intent(this, FavoritesActivity.class));
                 break;
         }
-
         return true;
     }
 
