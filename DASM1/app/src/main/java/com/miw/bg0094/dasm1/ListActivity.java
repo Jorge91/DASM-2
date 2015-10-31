@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.miw.bg0094.dasm1.models.Session;
 import com.miw.bg0094.dasm1.models.Show;
 import com.miw.bg0094.dasm1.models.APIShowsList;
 

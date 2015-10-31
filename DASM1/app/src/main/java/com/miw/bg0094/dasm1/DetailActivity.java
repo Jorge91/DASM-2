@@ -1,7 +1,7 @@
 package com.miw.bg0094.dasm1;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,10 +9,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.miw.bg0094.dasm1.models.APIShowsList;
 import com.miw.bg0094.dasm1.models.RatingResponse;
 import com.miw.bg0094.dasm1.models.Session;
 import com.miw.bg0094.dasm1.models.Show;
+import com.miw.bg0094.dasm1.models.SimpleShow;
 import com.squareup.picasso.Picasso;
 
 import retrofit.Call;
@@ -92,4 +92,15 @@ public class DetailActivity extends AppCompatActivity {
         });
 
     }
+
+    public void setAsFavorite(View v) {
+        SQLiteHelper db = new SQLiteHelper(this);
+
+        // add Books
+        db.addShow(new SimpleShow(show.getId(), show.getName()));
+
+        db.getAllShows();
+
+    }
+
 }
