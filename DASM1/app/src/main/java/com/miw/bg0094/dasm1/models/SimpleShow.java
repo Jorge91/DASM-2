@@ -31,9 +31,6 @@ public class SimpleShow {
 
     @Override
     public String toString() {
-        return "SimpleShow{" +
-                "_id=" + _id +
-                ", _name='" + _name + '\'' +
-                '}';
+        return _name;
     }
 }

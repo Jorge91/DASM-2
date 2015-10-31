@@ -95,12 +95,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void setAsFavorite(View v) {
         SQLiteHelper db = new SQLiteHelper(this);
-
-        // add Books
         db.addShow(new SimpleShow(show.getId(), show.getName()));
-
-        db.getAllShows();
-
     }
 
 }

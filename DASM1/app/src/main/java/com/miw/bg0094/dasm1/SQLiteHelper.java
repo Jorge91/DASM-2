@@ -70,7 +70,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     values); // key/value -> keys = column names/ values = column values
         } catch (Exception e) {
             Log.d("Existing id: ", show.get_name());
-        } 
+        }
 
         // 4. close
         db.close();

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +29,7 @@ public class ListActivity extends AppCompatActivity {
     private MoviedbService service;
     List<Show> actualShows;
     private ListView listView;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,8 @@ public class ListActivity extends AppCompatActivity {
 
         //ListView
         listView = (ListView) findViewById(R.id.listView);
+
+        // App bar
 
         initRetrofit();
         refreshShowsList();
@@ -71,6 +76,7 @@ public class ListActivity extends AppCompatActivity {
                 actualShows.addAll(showsList);
                 paintList();
             }
+
             @Override
             public void onFailure(Throwable t) {
                 Log.d("------", t.getMessage());
@@ -102,6 +108,30 @@ public class ListActivity extends AppCompatActivity {
 
     public void refreshList(View v) {
         refreshShowsList();
+    }
+
+    @Override
+    /**
+     * Añade el menú con la opcion de vaciar el fichero
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        // Inflador del menú: añade elementos a la action bar
+        getMenuInflater().inflate(R.menu.menu, menu);
+        this.menu = menu;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionFav:
+                startActivity(new Intent(this, FavoritesActivity.class));
+                break;
+        }
+
+        return true;
     }
 
 
