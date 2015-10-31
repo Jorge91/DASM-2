@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miw.bg0094.dasm1.models.APIShowsList;
+import com.miw.bg0094.dasm1.models.RatingResponse;
 import com.miw.bg0094.dasm1.models.Session;
 import com.miw.bg0094.dasm1.models.Show;
 import com.squareup.picasso.Picasso;
@@ -79,6 +81,32 @@ public class DetailActivity extends AppCompatActivity {
         float rating = ((RatingBar) findViewById(R.id.ratingBar)).getRating() * 2;
         Log.d("------------", Float.toString(rating));
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.themoviedb.org/3")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        service = retrofit.create(MoviedbService.class);
+
+        Call<RatingResponse> result = service.rateShow(show.getId(), session.getGuest_session_id(), rating);
+
+        result.enqueue(new Callback<RatingResponse>() {
+            @Override
+            public void onResponse(Response<RatingResponse> response, Retrofit retrofit) {
+                RatingResponse ratingResponse = response.body();
+                Log.d("--------", ratingResponse.toString());
+
+                Toast.makeText(getApplicationContext(), "Successfully rated!",
+                        Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("------", t.getMessage());
+                Toast.makeText(getApplicationContext(), "Error when rating",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
 
 
 
